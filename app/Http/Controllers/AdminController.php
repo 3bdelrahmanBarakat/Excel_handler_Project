@@ -68,7 +68,12 @@ class AdminController extends Controller
 
         $columnNames = $request->get('column_names');
         $data = $request->get('data');
-        return Excel::download(new UserDataExport($columnNames, $data), 'users.csv');
+        $columnMap = [
+            'full_name' => $columnNames[0],
+            'phone_number' => $columnNames[1],
+            'email' => $columnNames[2],
+        ];
+        return Excel::download(new UserDataExport($columnNames, $data,$columnMap), 'users.csv');
     }
 
 }
