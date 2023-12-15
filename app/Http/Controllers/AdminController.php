@@ -29,13 +29,12 @@ class AdminController extends Controller
 
     public function save(Request $request)
     {
-
     $request->validate([
         'mapped_columns' => 'required|array',
         'column_records' => 'required|array',
     ]);
 
-    $numRecords = count($request->column_records[$request->coulmn_name]);
+    $numRecords = count($request->column_records[$request->column_name]);
 
     for ($i = 0; $i < $numRecords; $i++) {
         $userData = new UserData();
@@ -65,7 +64,6 @@ class AdminController extends Controller
 
     public function export(ExportRequest $request)
     {
-
         $columnNames = $request->get('column_names');
         $data = $request->get('data');
         $columnMap = [
