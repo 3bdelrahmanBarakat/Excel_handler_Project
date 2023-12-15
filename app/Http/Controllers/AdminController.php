@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'file'=> 'required|mimes:csv'
+            'file'=> 'required|mimes:csv,xlsx'
         ]);
 
         $originalColumns = Excel::toArray(new UserDataImport(), $request->file('file'))[0];
@@ -65,7 +65,7 @@ class AdminController extends Controller
 
     public function export(ExportRequest $request)
     {
-        
+
         $columnNames = $request->get('column_names');
         $data = $request->get('data');
         return Excel::download(new UserDataExport($columnNames, $data), 'users.csv');
