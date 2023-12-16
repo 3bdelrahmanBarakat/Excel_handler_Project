@@ -130,7 +130,7 @@
               </div>
 
               <div class="col-lg-6 mb-4 order-0">
-                   
+
                     @if(session()->has('message'))
                       <div class="alert alert-success alert-dismissible" role="alert">
                         {{ session()->get('message') }}
@@ -161,66 +161,77 @@
 
 
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>
-                            Full Name
-                            <select name="column_names[]">
-                                <option value="">Select the column's name</option>
-                                <option value="name">Name</option>
-                                <option value="user">User</option>
-                            </select>
-                        </th>
-                        <th>
-                            Phone Number
-                            <select name="column_names[]">
-                                <option value="">Select the column's name</option>
-                                <option value="telephone">telephone</option>
-                                <option value="phone">Phone</option>
-                            </select>
-                        </th>
-                        <th>
-                            Email
-                            <select name="column_names[]">
-                                <option value="">Select the column's name</option>
-                                <option value="email">Email</option>
-                                <option value="gmail">gmail</option>
-                            </select>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Full Name
+                                    <select name="full_name">
+                                        <option value="">Select the column's name</option>
+                                        <option value="name">Name</option>
+                                        <option value="user">User</option>
+                                    </select>
+                                </th>
+                                <th>
+                                    Phone Number
+                                    <select name="phone_number" onchange="updateCheckboxName(this, 'checkbox2')">
+                                        <option value="">Select the column's name</option>
+                                        <option value="telephone">telephone</option>
+                                        <option value="phone">Phone</option>
+                                    </select>
+                                </th>
+                                <th>
+                                    Email
+                                    <select name="email_address" id="input1">
+                                        <option value="">Select the column's name</option>
+                                        <option value="email">Email</option>
+                                        <option value="gmail">gmail</option>
+                                    </select>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach ($userData as $data)
+                            <tr>
+                                <td>
+                                    @if ($data['full_name'])
+                                    
+                                    {{ $data['full_name'] }}
+                                    <fieldset>
+                                    Yes
+                                    <input type="checkbox" name="checkbox1[]" value="{{ $data['full_name'] }}">
+                                    No
+                                    <input type="checkbox" name="checkbox1[]" value="{{ null }}">
+                                </fieldset>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($data['phone_number'])
+                                    {{ $data['phone_number'] }}
+                                    <fieldset>
+                                    Yes
+                                    <input type="checkbox" name="checkbox2[]" value="{{ $data['phone_number'] }}">
+                                    No
+                                    <input type="checkbox" name="checkbox2[]" value="{{ null }}">
+                                     </fieldset>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($data['email'])
+                                    {{ $data['email'] }}
+                                    <fieldset>
+                                        Yes
+                                        <input type="checkbox" name="checkbox3[]" id="input2" value="{{ $data['email'] }}">
+                                        No
+                                        <input type="checkbox" name="checkbox3[]" id="input2" value="{{ null }}">
 
-
-
-                        @foreach ($userData as $data)
-                        <tr>
-                            <td>
-                                <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $data['full_name'] }}</strong>
-                                <i>Yes</i>
-                                <input type="checkbox" name="data[full_name][]" value="{{ $data['full_name'] }}">
-                                <i>No</i>
-                                <input type="checkbox" name="data[full_name][]" value="{{ null }}">
-                            </td>
-                            <td>
-                                {{ $data['phone_number'] }}
-                                <i>Yes</i>
-                                <input type="checkbox" name="data[phone_number][]" value="{{ $data['phone_number'] }}">
-                                <i>No</i>
-                                <input type="checkbox" name="data[phone_number][]" value="{{ null }}">
-                            </td>
-                            <td>
-                                {{ $data['email'] }}
-                                <i>Yes</i>
-                                <input type="checkbox" name="data[email][]" value="{{ $data['email'] }}">
-                                <i>No</i>
-                                <input type="checkbox" name="data[email][]" value="{{ null }}">
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                                    </fieldset>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 <button type="submit" class="btn btn-primary">Export</button>
                 </form>
                 </div>
@@ -261,5 +272,7 @@
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
   <!-- / Layout wrapper -->
+
+
 
 @endsection

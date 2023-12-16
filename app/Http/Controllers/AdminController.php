@@ -64,14 +64,24 @@ class AdminController extends Controller
 
     public function export(ExportRequest $request)
     {
-        $columnNames = $request->get('column_names');
-        $data = $request->get('data');
-        $columnMap = [
-            'full_name' => $columnNames[0],
-            'phone_number' => $columnNames[1],
-            'email' => $columnNames[2],
-        ];
-        return Excel::download(new UserDataExport($columnNames, $data,$columnMap), 'users.csv');
+
+
+        $columnMap = [];
+        if ($request->filled('full_name')) {
+            $columnMap[$request->full_name] = $request->checkbox1;
+        }
+
+        if ($request->filled('phone_number')) {
+            $columnMap[$request->phone_number] = $request->checkbox2;
+        }
+
+        if ($request->filled('email_address')) {
+            $columnMap[$request->email_address] = $request->checkbox3;
+        }
+
+
+
+        return Excel::download(new UserDataExport($columnMap), 'users.csv');
     }
 
 }

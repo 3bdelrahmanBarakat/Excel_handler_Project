@@ -7,30 +7,24 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class UserDataExport implements FromArray, WithHeadings
 {
-    private $data;
-    private $columnNames;
-    private $columnMap;
+    protected $columnMap;
 
-    public function __construct(array $columnNames, array $data,array $columnMap)
+    public function __construct(array $columnMap)
     {
-        $this->columnNames = $columnNames;
-        $this->data = $data;
         $this->columnMap = $columnMap;
     }
 
     public function array(): array
     {
-        $exportData = [];
+        $transposedData = array_map(null,...array_values($this->columnMap));
 
-        foreach ($this->columnMap as $index => $value) {
-
-            $exportData[$value] = $this->data[$index] ?? [];
-        }
-        return $exportData;
+        return $transposedData;
     }
 
     public function headings(): array
     {
-        return $this->columnNames;
+        return array_keys($this->columnMap);
     }
+
+    
 }
